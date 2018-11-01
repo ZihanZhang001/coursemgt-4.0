@@ -64,6 +64,26 @@ describe('Students', function (){
 
         });
     });
+    describe('GET /students/:id',  () => {
+        it('should return one student in an array', function(done) {
+            chai.request(server)
+                .get('/students/5bc50b7bc6fff5975531bdb9')
+                .end(function(err, res) {
+                    expect(res).to.have.status(200);
+                    expect(res.body).to.be.a('array');
+                    expect(res.body.length).to.equal(1);
+                    let result = _.map(res.body, (student) => {
+                        return { name: student.name }
+                    });
+                    expect(result).to.include( { name: "Abby" } );
+                    // expect(result).to.include( { name: "english", type: "P"  } );
+                    datastore.collection.drop();
+                    cor.collection.drop();
+                    done();
+                });
+
+        });
+    });
     describe('POST /students', function () {
         it('should return confirmation message and update datastore', function(done) {
             let student = {
