@@ -6,6 +6,7 @@ let expect = chai.expect;
 let datastore = require('../../models/courses');
 chai.use(chaiHttp);
 let _ = require('lodash' );
+chai.use(require('chai-things'));
 
 describe('Courses', function (){
     beforeEach(function(done){
