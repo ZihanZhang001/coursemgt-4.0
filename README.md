@@ -7,9 +7,6 @@ Name: Zihan Zhang
 This project's API is standard RESTful, it includes: GET, PUT, POST and DELETE.
 
 ## API endpoints.
- . . . . . List the API's endpoints and state the purpose of each . . . . 
- 
- e.g.
 
  + GET /courses - Get all courses.
  + GET /courses/:id - Get one course by id.
@@ -32,7 +29,6 @@ This project's API is standard RESTful, it includes: GET, PUT, POST and DELETE.
  + DELETE /students/:id - Delete one student.
 
 ## Data storage.
-. . . . This section is only relevant if your tests included the integration of MongoDB (or other database) with the API. It should specify the database schema, i.e. JSON document structure for each collection type in the MongoDB database.
 
 courses.js:
 let mongoose = require('mongoose');
@@ -69,7 +65,6 @@ let TeachersSchema = new mongoose.Schema({
 module.exports = mongoose.model('Teachers', TeachersSchema);
 
 ## Sample Test execution.
-. . . . . In this section include a listing of the output from running your tests, e.g.
 
         $ npm test
 
