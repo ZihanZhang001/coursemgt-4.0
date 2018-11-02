@@ -13,13 +13,13 @@ This project's API is standard RESTful, it includes: GET, PUT, POST and DELETE.
  + POST /courses - Add a new course
  + PUT /courses/:id/size - Increase size of a course.
  + DELETE /courses/:id - Delete one course.
- 
+ + 
  + GET /teachers - Get all teachers.
  + GET /teachers/:id - Get one teacher by id.
  + GET /teachers/courses /:id - Get all courses teached by a teacher by using populate function.
  + POST /teachers/ - Add a new teacher.
  + DELETE /teachers/:id - Delete one teacher.
- 
+ + 
  + GET /students - Get all students.
  + GET /students/:id - Get one student by id.
  + GET /students/fuzzystudent/:keyword - Get Find students by fuzzysearch.
