@@ -31,38 +31,41 @@ This project's API is standard RESTful, it includes: GET, PUT, POST and DELETE.
 ## Data storage.
 
 courses.js:
-let mongoose = require('mongoose');
-let CoursesSchema = new mongoose.Schema({
-        name: String,
-        type: String,
-        size: Number,
-        room: String,
-        time: Number,
-    },
-    { collection: 'courses' });
-module.exports = mongoose.model('Courses', CoursesSchema);
+
+        let mongoose = require('mongoose');
+        let CoursesSchema = new mongoose.Schema({
+                name: String,
+                type: String,
+                size: Number,
+                room: String,
+                time: Number,
+            },
+            { collection: 'courses' });
+        module.exports = mongoose.model('Courses', CoursesSchema);
    
 students.js:
-let mongoose = require('mongoose');
-let StudentsSchema = new mongoose.Schema({
-        name: String,
-        gender: String,
-        age: Number,
-        college: String,
-        courses_id:[{type: mongoose.Schema.ObjectId, ref:'Courses'}]
-    },
-    { collection: 'students' });
-module.exports = mongoose.model('Students', StudentsSchema);
+
+        let mongoose = require('mongoose');
+        let StudentsSchema = new mongoose.Schema({
+                name: String,
+                gender: String,
+                age: Number,
+                college: String,
+                courses_id:[{type: mongoose.Schema.ObjectId, ref:'Courses'}]
+            },
+            { collection: 'students' });
+        module.exports = mongoose.model('Students', StudentsSchema);
     
 teachers.js:
-let mongoose = require('mongoose');
-let TeachersSchema = new mongoose.Schema({
-        name: String,
-        gender: String,
-        courses_id:[{type: mongoose.Schema.ObjectId, ref:'Courses'}]
-    },
-    { collection: 'teachers' });
-module.exports = mongoose.model('Teachers', TeachersSchema);
+
+        let mongoose = require('mongoose');
+        let TeachersSchema = new mongoose.Schema({
+                name: String,
+                gender: String,
+                courses_id:[{type: mongoose.Schema.ObjectId, ref:'Courses'}]
+            },
+            { collection: 'teachers' });
+        module.exports = mongoose.model('Teachers', TeachersSchema);
 
 ## Sample Test execution.
 
