@@ -157,4 +157,4 @@ teachers.js:
 [ Markdown Tip: By indenting the above listing, GitHub will display it in a 'box' and preserve any formatting.]
 
 ## Extra features.
-My testing codes have beforeEach hooks to make sure the isolation.They keep the silent principle, and has expectations about the target state as well as the target result/return value. Also, it has normal and error cases. I uses Branch-Edit-Merge workflow to complete the codes. In addition, SuperTest has been used.
+My testing codes have beforeEach hooks to make sure the isolation principle.They keep the silent principle, and has expectations about the target state as well as the target result/return value. Also, it has normal and error cases. I uses Branch-Edit-Merge workflow to complete the codes. In addition, SuperTest has been used.
