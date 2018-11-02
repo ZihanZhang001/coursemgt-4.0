@@ -9,6 +9,7 @@ chai.use(chaiHttp);
 let _ = require('lodash' );
 chai.use(require('chai-things'));
 let mongoose = require('mongoose');
+const request = require('supertest');
 
 describe('Teachers', function (){
     beforeEach(function(done){
@@ -34,7 +35,7 @@ describe('Teachers', function (){
     });
     describe('GET /teachers',  () => {
         it('should return all the teachers in an array', function(done) {
-            chai.request(server)
+            request(server)
                 .get('/teachers')
                 .end(function(err, res) {
                     expect(res).to.have.status(200);
@@ -54,7 +55,7 @@ describe('Teachers', function (){
     });
     describe('GET /teachers/:id',  () => {
         it('should return one teacher in an array', function(done) {
-            chai.request(server)
+            request(server)
                 .get('/teachers/5bce37ee9f5b4f90ef56d037')
                 .end(function(err, res) {
                     expect(res).to.have.status(200);
@@ -74,7 +75,7 @@ describe('Teachers', function (){
     });
     describe('GET /teachers/courses/:id',  () => {
         it('should return reference courses teached by a teacher in an array', function(done) {
-            chai.request(server)
+            request(server)
                 .get('/teachers/courses/5bce37ee9f5b4f90ef56d037')
                 .end(function(err, res) {
                     expect(res).to.have.status(200);
@@ -93,7 +94,7 @@ describe('Teachers', function (){
                 gender: "male",
                 courses_id: mongoose.Types.ObjectId("5bc4f61282a78003ce4dc30f")
             };
-            chai.request(server)
+            request(server)
                 .post('/teachers')
                 .send(teacher)
                 .end(function(err, res) {
@@ -103,7 +104,7 @@ describe('Teachers', function (){
                 });
         });
         after(function  (done) {
-            chai.request(server)
+            request(server)
                 .get('/teachers')
                 .end(function(err, res) {
                     let result = _.map(res.body, (teacher) => {
@@ -120,10 +121,10 @@ describe('Teachers', function (){
         describe('valid delete',() =>
         {
             it('should delete a teacher', function (done) {
-                chai.request(server)
+                request(server)
                     .get('/teachers')
                     .end(function(err,res){
-                        chai.request(server)
+                        request(server)
                             .delete('/teachers/'+res.body[0]._id)
                             .end(function (err, res) {
                                 expect(res).to.have.status(200);
@@ -134,7 +135,7 @@ describe('Teachers', function (){
 
             });
             after(function (done){
-                chai.request(server)
+                request(server)
                     .get('/teachers')
                     .end(function(err,res){
                         let result=_.map(res.body,(teacher)=>{
@@ -152,7 +153,7 @@ describe('Teachers', function (){
         });
         describe('invalid delete',() => {
             it('should return a 404 and a message for invalid teacher id', function (done) {
-                chai.request(server)
+                request(server)
                     .delete('/teachers/1000004')
                     .end(function (err, res) {
                         expect(res).to.have.status(404);

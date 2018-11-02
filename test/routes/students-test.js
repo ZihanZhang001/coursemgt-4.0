@@ -9,6 +9,7 @@ chai.use(chaiHttp);
 let _ = require('lodash' );
 chai.use(require('chai-things'));
 let mongoose = require('mongoose');
+const request = require('supertest');
 
 describe('Students', function (){
     beforeEach(function(done){
@@ -46,7 +47,7 @@ describe('Students', function (){
     });
     describe('GET /students',  () => {
         it('should return all the students in an array', function(done) {
-            chai.request(server)
+            request(server)
                 .get('/students')
                 .end(function(err, res) {
                     expect(res).to.have.status(200);
@@ -66,7 +67,7 @@ describe('Students', function (){
     });
     describe('GET /students/:id',  () => {
         it('should return one student in an array', function(done) {
-            chai.request(server)
+            request(server)
                 .get('/students/5bc50b7bc6fff5975531bdb9')
                 .end(function(err, res) {
                     expect(res).to.have.status(200);
@@ -85,7 +86,7 @@ describe('Students', function (){
     });
     describe('GET /students/courses/:id',  () => {
         it('should return reference courses taked by a student in an array', function(done) {
-            chai.request(server)
+            request(server)
                 .get('/students/courses/5bc50b7bc6fff5975531bdb9')
                 .end(function(err, res) {
                     expect(res).to.have.status(200);
@@ -99,7 +100,7 @@ describe('Students', function (){
     });
     describe('GET /students/fuzzystudent/:keyword',  () => {
         it('should return a student in an array by fuzzy search', function(done) {
-            chai.request(server)
+            request(server)
                 .get('/students/fuzzystudent/ab')
                 .end(function(err, res) {
                     expect(res).to.have.status(200);
@@ -124,7 +125,7 @@ describe('Students', function (){
                 college:"Business",
                 courses_id: [mongoose.Types.ObjectId("5bc4f61282a78003ce4dc30f"),mongoose.Types.ObjectId("5bc4f61e82a78003ce4dc310")]
             };
-            chai.request(server)
+            request(server)
                 .post('/students')
                 .send(student)
                 .end(function(err, res) {
@@ -134,7 +135,7 @@ describe('Students', function (){
                 });
         });
         after(function  (done) {
-            chai.request(server)
+            request(server)
                 .get('/students')
                 .end(function(err, res) {
                     let result = _.map(res.body, (student) => {
@@ -148,10 +149,10 @@ describe('Students', function (){
     });
     describe('PUT /students/:id/age', () => {
         it('should return a message and the student increment age by 1', function(done) {
-            chai.request(server)
+            request(server)
                 .get('/students')
                 .end(function(err,res){
-                    chai.request(server)
+                    request(server)
                         .put('/students/'+res.body[0]._id+'/age')
                         .end(function(err, res) {
                             expect(res).to.have.status(200);
@@ -164,7 +165,7 @@ describe('Students', function (){
 
         });
         it('should return a 404 and a message for invalid student id', function(done) {
-            chai.request(server)
+            request(server)
                 .put('/students/1100001/age')
                 .end(function(err, res) {
                     expect(res).to.have.status(404);
@@ -178,7 +179,7 @@ describe('Students', function (){
         describe('valid delete',() =>
         {
             it('should delete a student', function (done) {
-                chai.request(server)
+                request(server)
                     .get('/students')
                     .end(function(err,res){
                         chai.request(server)
@@ -192,7 +193,7 @@ describe('Students', function (){
 
             });
             after(function (done){
-                chai.request(server)
+                request(server)
                     .get('/students')
                     .end(function(err,res){
                         let result=_.map(res.body,(student)=>{
@@ -210,7 +211,7 @@ describe('Students', function (){
         });
         describe('invalid delete',() => {
             it('should return a 404 and a message for invalid student id', function (done) {
-                chai.request(server)
+                request(server)
                     .delete('/students/1000004')
                     .end(function (err, res) {
                         expect(res).to.have.status(404);

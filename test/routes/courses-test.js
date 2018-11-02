@@ -7,6 +7,7 @@ let datastore = require('../../models/courses');
 chai.use(chaiHttp);
 let _ = require('lodash' );
 chai.use(require('chai-things'));
+const request = require('supertest');
 
 describe('Courses', function (){
     beforeEach(function(done){
@@ -23,7 +24,7 @@ describe('Courses', function (){
     });
     describe('GET /courses',  () => {
         it('should return all the courses in an array', function(done) {
-            chai.request(server)
+            request(server)
                 .get('/courses')
                 .end(function(err, res) {
                     expect(res).to.have.status(200);
@@ -50,7 +51,7 @@ describe('Courses', function (){
                 room:"A03",
                 time:10.15
             };
-            chai.request(server)
+            request(server)
                 .post('/courses')
                 .send(course)
                 .end(function(err, res) {
@@ -60,7 +61,7 @@ describe('Courses', function (){
                 });
         });
         after(function  (done) {
-            chai.request(server)
+            request(server)
                 .get('/courses')
                 .end(function(err, res) {
                     let result = _.map(res.body, (course) => {
@@ -75,10 +76,10 @@ describe('Courses', function (){
     });
     describe('PUT /courses/:id/size', () => {
         it('should return a message and the course increment size by 1', function(done) {
-            chai.request(server)
+            request(server)
                 .get('/courses')
                 .end(function(err,res){
-                    chai.request(server)
+                    request(server)
                         .put('/courses/'+res.body[0]._id+'/size')
                         .end(function(err, res) {
                             expect(res).to.have.status(200);
@@ -91,7 +92,7 @@ describe('Courses', function (){
 
         });
         it('should return a 404 and a message for invalid donation id', function(done) {
-            chai.request(server)
+            request(server)
                 .put('/courses/1100001/size')
                 .end(function(err, res) {
                     expect(res).to.have.status(404);
@@ -105,10 +106,10 @@ describe('Courses', function (){
         describe('valid delete',() =>
         {
             it('should delete a course', function (done) {
-                chai.request(server)
+                request(server)
                     .get('/courses')
                     .end(function(err,res){
-                        chai.request(server)
+                        request(server)
                             .delete('/courses/'+res.body[0]._id)
                             .end(function (err, res) {
                                 expect(res).to.have.status(200);
@@ -119,7 +120,7 @@ describe('Courses', function (){
 
             });
             after(function (done){
-                chai.request(server)
+                request(server)
                     .get('/courses')
                     .end(function(err,res){
                         let result=_.map(res.body,(course)=>{
@@ -137,7 +138,7 @@ describe('Courses', function (){
         });
         describe('invalid delete',() => {
             it('should return a 404 and a message for invalid course id', function (done) {
-                chai.request(server)
+                request(server)
                     .delete('/courses/1000004')
                     .end(function (err, res) {
                         expect(res).to.have.status(404);
