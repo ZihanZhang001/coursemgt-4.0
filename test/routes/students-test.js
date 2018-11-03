@@ -116,6 +116,18 @@ describe('Students', function (){
 
         });
     });
+    describe('boundary cases', function(){
+        it('should return none student for no name matches', function(done){
+            request(server)
+                .get('/students/fuzzystudent/z')
+                .end(function(err, res) {
+                    expect(res.body.length).to.equal(0);
+                    datastore.collection.drop();
+                    cor.collection.drop();
+                    done();
+                });
+        });
+    });
     describe('POST /students', function () {
         it('should return confirmation message and update datastore', function(done) {
             let student = {
